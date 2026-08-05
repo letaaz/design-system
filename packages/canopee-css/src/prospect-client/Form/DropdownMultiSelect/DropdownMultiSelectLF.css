@@ -1,0 +1,22 @@
+@import "./DropdownMultiSelectCommon.css";
+
+@layer canopee {
+  .af-form__dropdown-multi-select-input {
+    --dropdown-multi-select-border-radius: var(--radius-4);
+    --dropdown-multi-select-color: var(--gray-1000);
+    --dropdown-multi-select-background-color: var(--white-1000);
+    --dropdown-multi-select-box-shadow-color: var(--blue-1000);
+    --dropdown-multi-select-disabled-background-color: var(--gray-050);
+    --dropdown-multi-select-disabled-color: var(--gray-500);
+    --dropdown-multi-select-disabled-box-shadow-color: var(--gray-140);
+    --dropdown-multi-select-option-color: var(--gray-800);
+    --dropdown-multi-select-option-disabled-color: var(--gray-800);
+    --dropdown-multi-select-summary-color: var(--gray-800);
+    --dropdown-multi-select-selected-color: var(--blue-1000);
+    --item-multi-select-background-color: var(--white-1000);
+  }
+
+  .af-form__dropdown-multi-select-input--error {
+    --dropdown-multi-select-box-shadow-color: var(--red-alert-1200);
+  }
+}

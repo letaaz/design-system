@@ -5,12 +5,13 @@ import {
   type ReactNode,
 } from "react";
 import { getClassName } from "../utilities/getClassName";
+import type { TagProps } from "../Tag/TagCommon";
 
 export type TagListProps = {
   children: ReactNode;
   hideThreshold?: number;
   className?: string;
-  OverflowTag: ComponentType<{ children: ReactNode }>;
+  OverflowTag: ComponentType<TagProps>;
 };
 
 export const TagListCommon = ({

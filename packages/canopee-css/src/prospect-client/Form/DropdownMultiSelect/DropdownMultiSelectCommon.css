@@ -1,0 +1,103 @@
+@layer canopee {
+  .af-form__dropdown-multi-select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--rem-8);
+  }
+
+  .af-form__dropdown-multi-select-input {
+    display: flex;
+    width: 100%;
+    height: 56px;
+    margin: 0;
+    border: 0.5px solid rgba(51, 51, 51, 20%);
+    border-radius: var(--radius-8);
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 16px -2px rgba(51, 51, 51, 20%);
+    transition: 0.6s height;
+    appearance: base-select;
+    interpolate-size: allow-keywords;
+
+    &:disabled {
+      color: var(--dropdown-multi-select-disabled-color);
+      background-color: var(--dropdown-multi-select-disabled-background-color);
+      cursor: not-allowed;
+    }
+
+    &:hover,
+    &:has(option:focus) {
+      height: fit-content;
+    }
+
+    @media (--desktop-small) {
+      font-size: var(--rem-18);
+      line-height: 1.25;
+    }
+  }
+
+  .af-form__dropdown-multi-select-input--warning {
+    border-color: var(--orange-1050);
+  }
+
+  .af-form__dropdown-multi-select-input--error {
+    border-color: var(--red-alert-1200);
+  }
+
+  .af-form__dropdown-multi-select-option {
+    display: inline-flex;
+    width: 100%;
+    min-height: 56px;
+    padding: var(--size-12) var(--size-12);
+    align-items: center;
+    column-gap: var(--size-8);
+    background-color: var(--white-1000);
+    cursor: pointer;
+
+    &:nth-of-type(even) {
+      background-color: var(--blue-040);
+    }
+
+    &:checked,
+    &:hover,
+    &:focus {
+      font-weight: 600;
+      color: var(--blue-1000);
+    }
+  }
+
+  .af-form__dropdown-multi-select-option--summary {
+    padding-left: 0;
+    color: var(--dropdown-multi-select-option-disabled-color);
+
+    &:checked,
+    &:hover,
+    &:focus {
+      font-weight: 400;
+      color: var(--blue-1000);
+    }
+
+    &::after {
+      margin-left: auto;
+      content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 -960 960 960'><path fill='currentColor' d='M480-344 240-584l43-43 197 197 197-197 43 43-240 240Z'/></svg>");
+    }
+  }
+
+  .af-form__dropdown-multi-select-input:has(option:focus)
+    .af-form__dropdown-multi-select-option--summary::after {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 -960 960 960'><path fill='currentColor' d='M240-376l240-240 240 240-43 43-197-197-197 197-43-43Z'/></svg>");
+  }
+
+  .af-form__dropdown-multi-select-option--summary-selected {
+    font-weight: 600;
+    color: var(--blue-1000);
+
+    &:checked,
+    &:hover,
+    &:focus {
+      font-weight: 600;
+      color: var(--blue-1000);
+    }
+  }
+}
