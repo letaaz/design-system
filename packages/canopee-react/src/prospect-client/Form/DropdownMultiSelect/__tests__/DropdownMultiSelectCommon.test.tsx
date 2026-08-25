@@ -3,7 +3,7 @@ import { isInaccessible } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { describe, expect, it, vi } from "vitest";
-import { useState } from "react";
+import { useState, type ComponentProps } from "react";
 import { Tag } from "../../../Tag/TagCommon";
 import { TagList } from "../../../TagList/TagListApollo";
 import { MultiSelectList } from "../../MultiSelectList/MultiSelectListApollo";
@@ -28,7 +28,7 @@ describe("<DropdownMultiSelectCommon />", () => {
   ];
 
   const renderDropdownMultiSelect = (
-    props: Partial<React.ComponentProps<typeof DropdownMultiSelectCommon>> = {},
+    props: Partial<ComponentProps<typeof DropdownMultiSelectCommon>> = {},
   ) =>
     render(
       <DropdownMultiSelectCommon

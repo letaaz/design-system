@@ -10,7 +10,16 @@ To use DropdownMultiSelect import it like this:
 ```tsx
 import { DropdownMultiSelect } from "@axa-fr/canopee-react/client";
 
-const MyComponent = () => <DropdownMultiSelect label="Label" items={[]} />;
+const MyComponent = () => (
+  <DropdownMultiSelect
+    label="Label"
+    items={[
+      { id: "option-1", label: "Option 1" },
+      { id: "option-2", label: "Option 2" },
+      { id: "option-3", label: "Option 3" },
+    ]}
+  />
+);
 ```
 
 ## Playground

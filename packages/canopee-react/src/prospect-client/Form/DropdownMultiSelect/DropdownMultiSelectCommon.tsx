@@ -1,10 +1,9 @@
 import {
   type ComponentProps,
   type ComponentType,
-  useEffect,
+  type ToggleEvent,
   useId,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import type { DropdownProps } from "../Dropdown/DropdownCommon";
@@ -60,7 +59,6 @@ export const DropdownMultiSelectCommon = ({
   ItemLabelComponent,
   ItemMessageComponent,
 }: DropdownMultiSelectCommonProps) => {
-  const rootRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [internalValues, setInternalValues] = useState<string[]>(
     () =>
@@ -80,7 +78,7 @@ export const DropdownMultiSelectCommon = ({
   });
 
   const hasError = Boolean(message) && messageType === "error";
-  const hasWarning = !hasError && Boolean(message) && messageType === "warning";
+  const hasWarning = Boolean(message) && messageType === "warning";
   const componentInputClassName = getClassName({
     baseClassName: "af-form__dropdown-input",
     modifiers: [hasError && "error", hasWarning && "warning"],
@@ -118,38 +116,12 @@ export const DropdownMultiSelectCommon = ({
     return `${base} sur ${items.length}`;
   }, [selectedSummary, selectedValues.length, items.length]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (rootRef.current?.contains(event.target as Node)) {
-        return;
-      }
-
-      setIsOpen(false);
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, []);
+  const handlePanelToggle = (event: ToggleEvent<HTMLDivElement>) => {
+    setIsOpen(event.newState === "open");
+  };
 
   return (
-    <div className={componentClassName} id={fieldId} ref={rootRef}>
+    <div className={componentClassName} id={fieldId}>
       <ItemLabelComponent
         description={description}
         moreButtonLabel={moreButtonLabel}
@@ -174,23 +146,25 @@ export const DropdownMultiSelectCommon = ({
           aria-labelledby={`${fieldId}-label ${countId}`}
           disabled={disabled}
           data-empty={selectedValues.length === 0}
-          onClick={() => setIsOpen((currentIsOpen) => !currentIsOpen)}
+          popoverTarget={panelId}
         >
           <span className="dropdown-multi-select__summary">
             {selectedSummary}
           </span>
-          <span id={countId} className="dropdown-multi-select__sr-only">
+          <span id={countId} className="sr-only">
             {accessibleCount}
           </span>
         </button>
 
-        {isOpen && items.length > 0 ? (
-          <div
-            id={panelId}
-            className="dropdown-multi-select__list"
-            role="group"
-            aria-labelledby={triggerId}
-          >
+        <div
+          id={panelId}
+          popover="auto"
+          className="dropdown-multi-select__list"
+          role="group"
+          aria-labelledby={triggerId}
+          onToggle={handlePanelToggle}
+        >
+          {isOpen && items.length > 0 ? (
             <MultiSelectListComponent
               items={effectiveItems}
               onItemSelect={(id, checked) => {
@@ -201,8 +175,8 @@ export const DropdownMultiSelectCommon = ({
                 onChange?.(nextValues);
               }}
             />
-          </div>
-        ) : null}
+          ) : null}
+        </div>
       </div>
 
       {selectedItems.length > 0 ? (
